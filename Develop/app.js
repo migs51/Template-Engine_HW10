@@ -134,69 +134,28 @@ const employeeType = () => {
 async function init() {
     try {
         
-        const managerAnswers = await managerPrompt();
-        const engAnswers = await engineerPrompt();
-        const internAnswers = await internPrompt();
-        const addMore = await addMorePrompt();
-        
-        
-        console.log(addMore.addMore);
-
-        const manager = await new Manager(managerAnswers.managerName, managerAnswers.managerID, managerAnswers.managerEmail, managerAnswers.managerOffice);
-        const engineer = await new Engineer(engAnswers.engineerName, engAnswers.engineerID, engAnswers.engineerEmail, engAnswers.github);
-        const intern = await new Intern(internAnswers.internName, internAnswers.internID, internAnswers.internEmail, internAnswers.school);
-        console.log(manager);
-        console.log(engineer);
-        console.log(intern);
-        const employees = [];
-        employees.push(manager);
-        employees.push(engineer);
-        employees.push(intern);
-        const htmlRendered = render(employees);
-        await writeFileAsync(outputPath, htmlRendered);
-
-
-        //  do {
-        //     const type = await employeeType();
-        //     if (type.employeeType === "Engineer") {
-        //         await engineerPrompt();
-        //     }
-        //     else if(type.employeeType === "Intern") {
-        //         console.log("intern prompt");
-        //     }
-        //     await addMorePrompt();
-           
-        //     }
-        // while (addMore.addMore === true);
-        // const manager = await new Manager(managerAnswers.managerName, managerAnswers.managerID, managerAnswers.managerEmail, managerAnswers.managerOffice);
-        // console.log(manager);
-        // const employees = [];
-        // employees.push(manager);
-        // const htmlRendered = render(employees);
-        // await writeFileAsync(outputPath, htmlRendered);
-
-        // if (addMore.addMore === true){
-        //     const type = await employeeType();
-        //     if (type.employeeType === "Engineer") {
-        //         const engAnswers = await engineerPrompt();
-        //     }
-        //     else if(type.employeeType === "Intern") {
-        //         console.log("intern prompt");
-        //     }
-        //     await addMorePrompt();
-        // } else if (addMore.addMore === false){
-        //     const manager = await new Manager(managerAnswers.managerName, managerAnswers.managerID, managerAnswers.managerEmail, managerAnswers.managerOffice);
-        //     const engineer = await new Engineer(engAnswers.engineerName, engAnswers.engineerID, engAnswers.engineerEmail, engAnswers.github);
-        //     console.log(manager);
-        //     console.log(engineer);
-        //     const employees = [];
-        //     employees.push(manager);
-        //     employees.push(engineer);
-        //     const htmlRendered = render(employees);
-        //     await writeFileAsync(outputPath, htmlRendered);
+            const managerAnswers = await managerPrompt();
+            const engAnswers = await engineerPrompt();
+            const internAnswers = await internPrompt();
+            const addMore = await addMorePrompt();
             
-        // }
-           
+            
+            console.log(addMore.addMore);
+    
+            const manager = await new Manager(managerAnswers.managerName, managerAnswers.managerID, managerAnswers.managerEmail, managerAnswers.managerOffice);
+            const engineer = await new Engineer(engAnswers.engineerName, engAnswers.engineerID, engAnswers.engineerEmail, engAnswers.github);
+            const intern = await new Intern(internAnswers.internName, internAnswers.internID, internAnswers.internEmail, internAnswers.school);
+            console.log(manager);
+            console.log(engineer);
+            console.log(intern);
+            const employees = [];
+            employees.push(manager);
+            employees.push(engineer);
+            employees.push(intern);
+            const htmlRendered = render(employees);
+            await writeFileAsync(outputPath, htmlRendered);
+        
+    
 
     
     } catch (err) {
