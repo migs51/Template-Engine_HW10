@@ -37,24 +37,168 @@ const managerPrompt = () => {
             message:"what's your manager's office number?"
         }
        
-        
-    ])
-   
-    
+      ])
+
+}
+
+const engineerPrompt = () => {
+    return inquirer.prompt ([
+        {
+            type:"input",
+            name:"engineerName",
+            message:"what's this employee's name?"
+        },
+        {
+            type:"input",
+            name:"engineerID",
+            message:"what's their ID?"
+        },
+        {
+            type:"input",
+            name:"engineerEmail",
+            message:"what's your their email address?"
+        },
+        {
+            type:"input",
+            name:"github",
+            message:"what's their github username?"
+        }
+       
+      ])
+
+}
+
+const internPrompt = () => {
+    return inquirer.prompt ([
+        {
+            type:"input",
+            name:"internName",
+            message:"what's this intern's name?"
+        },
+        {
+            type:"input",
+            name:"internID",
+            message:"what's their ID?"
+        },
+        {
+            type:"input",
+            name:"internEmail",
+            message:"what's your their email address?"
+        },
+        {
+            type:"input",
+            name:"school",
+            message:"what's school did they go to?"
+        }
+       
+      ])
 
 }
 
 
+
+//prompt user questions about the manager
+//asked the user if they want to add more employees
+//ask user which type of employee they want to add
+//if they choose engineer init prompt with specific Qs about engineer employees
+//if intern init prompt with speicfic Qs about Interns
+// after each employee addition ask the user of they want to add more employees
+//when user finally selects "no" to adding more employees 
+
+
+
+const addMorePrompt = () => {
+    return inquirer.prompt ([
+        {
+            type:"confirm",
+            name: "addMore",
+            message: "Do you want to add more employees?"
+        }
+
+    ])
+}
+
+const employeeType = () => {
+    return inquirer.prompt ([
+        {
+            type: "list",
+            name: "employeeType",
+            message: "what type of employee?",
+            choices: ["Engineer", "Intern"]
+        }
+    ])
+}
+
+
+
 async function init() {
     try {
+        
         const managerAnswers = await managerPrompt();
+        const engAnswers = await engineerPrompt();
+        const internAnswers = await internPrompt();
+        const addMore = await addMorePrompt();
+        
+        
+        console.log(addMore.addMore);
+
         const manager = await new Manager(managerAnswers.managerName, managerAnswers.managerID, managerAnswers.managerEmail, managerAnswers.managerOffice);
+        const engineer = await new Engineer(engAnswers.engineerName, engAnswers.engineerID, engAnswers.engineerEmail, engAnswers.github);
+        const intern = await new Intern(internAnswers.internName, internAnswers.internID, internAnswers.internEmail, internAnswers.school);
         console.log(manager);
+        console.log(engineer);
+        console.log(intern);
         const employees = [];
         employees.push(manager);
+        employees.push(engineer);
+        employees.push(intern);
         const htmlRendered = render(employees);
         await writeFileAsync(outputPath, htmlRendered);
-      
+
+
+        //  do {
+        //     const type = await employeeType();
+        //     if (type.employeeType === "Engineer") {
+        //         await engineerPrompt();
+        //     }
+        //     else if(type.employeeType === "Intern") {
+        //         console.log("intern prompt");
+        //     }
+        //     await addMorePrompt();
+           
+        //     }
+        // while (addMore.addMore === true);
+        // const manager = await new Manager(managerAnswers.managerName, managerAnswers.managerID, managerAnswers.managerEmail, managerAnswers.managerOffice);
+        // console.log(manager);
+        // const employees = [];
+        // employees.push(manager);
+        // const htmlRendered = render(employees);
+        // await writeFileAsync(outputPath, htmlRendered);
+
+        // if (addMore.addMore === true){
+        //     const type = await employeeType();
+        //     if (type.employeeType === "Engineer") {
+        //         const engAnswers = await engineerPrompt();
+        //     }
+        //     else if(type.employeeType === "Intern") {
+        //         console.log("intern prompt");
+        //     }
+        //     await addMorePrompt();
+        // } else if (addMore.addMore === false){
+        //     const manager = await new Manager(managerAnswers.managerName, managerAnswers.managerID, managerAnswers.managerEmail, managerAnswers.managerOffice);
+        //     const engineer = await new Engineer(engAnswers.engineerName, engAnswers.engineerID, engAnswers.engineerEmail, engAnswers.github);
+        //     console.log(manager);
+        //     console.log(engineer);
+        //     const employees = [];
+        //     employees.push(manager);
+        //     employees.push(engineer);
+        //     const htmlRendered = render(employees);
+        //     await writeFileAsync(outputPath, htmlRendered);
+            
+        // }
+           
+
+    
     } catch (err) {
         console.log(err);
     }
@@ -68,19 +212,6 @@ init();
 
 
 
-// function addMorePrompt() {
-//     inquirer.prompt([
-//         {
-//             type: "input",
-//             name: "name",
-//             message: "what's your name?"
-//         }
-        
-
-//     ]);
-// }
-
-// addMorePrompt();
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
